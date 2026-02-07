@@ -5,9 +5,11 @@ import authRouter from './routes/auth.routes.js'
 import { connectDB } from './config/database.js'
 import { redisClient } from './config/redis.js'
 import { errorHandler } from './middlewares/error.middleware.js'
+import perfumeRouter from './routes/perfume.routes.js'
+import memberRouter from './routes/member.routes.js'
 
 config()
-const POST = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000
 const app = express()
 
 // middleware
@@ -21,6 +23,8 @@ await redisClient.connect()
 
 //routes:
 app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/perfumes', perfumeRouter)
+app.use('/api/v1/members', memberRouter)
 app.use('/', () => {
   console.log('Hello World')
 })
@@ -28,6 +32,6 @@ app.use('/', () => {
 //error handler
 app.use(errorHandler)
 
-app.listen(POST, () => {
-  console.log(`Server is running on port ${POST}`)
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`)
 })

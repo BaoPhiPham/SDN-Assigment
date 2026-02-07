@@ -4,10 +4,10 @@ import { StringValue } from '~/constants/types.js'
 import { Member } from '~/models/index.js'
 import { signToken, verifyToken } from '~/utils/jwt.js'
 import { deleteRefreshToken, existsRefreshToken, getUserIdFromRedis, saveRefreshToken } from './redis.services.js'
-import { TokenPayload } from '~/types/jwt.js'
+import { TokenPayload } from '~/types/jwt/jwt.js'
 import { randomUUID } from 'node:crypto'
 import { hashFunction } from '~/utils/hash.js'
-import { RegisterPayload } from '~/types/requestPayload.js'
+import { RegisterPayload } from '~/types/requests/requestPayload.js'
 
 class AuthService {
   signAccessToken(userId: string) {
@@ -80,7 +80,7 @@ class AuthService {
     //xóa token cũ trong redis
     await deleteRefreshToken(payload.jti as string)
     //tạo token mới
-    const newAccesToken = await this.signAccessToken(userId)
+    const newAccessToken = await this.signAccessToken(userId)
     const jti = randomUUID()
     const newRefreshToken = await this.signRefreshToken(userId, jti)
     //lưu token mới vào redis
@@ -89,7 +89,7 @@ class AuthService {
       userId: userId
     })
     return {
-      newAccesToken,
+      newAccessToken,
       newRefreshToken
     }
   }

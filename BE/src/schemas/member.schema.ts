@@ -16,10 +16,12 @@ const memberSchema = new Schema(
       required: true
     },
     yob: {
-      type: Number
+      type: Number,
+      required: true
     },
     gender: {
-      type: Boolean
+      type: Boolean,
+      required: true
     },
     isAdmin: {
       type: Boolean,

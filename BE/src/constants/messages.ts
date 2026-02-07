@@ -65,5 +65,18 @@ export const USERS_MESSAGE = {
   GET_VIDEO_STATUS_SUCCESS: 'Get video status success',
   GENDER_MUST_BE_REQUIRED: 'Gender must be required',
   GENDER_MUST_BE_A_BOOLEAN: 'Gender must be a boolean',
-  DATE_OF_BIRTH_MUST_BE_NUMBER: 'Date of birth must be a number'
+  DATE_OF_BIRTH_MUST_BE_NUMBER: 'Date of birth must be a number',
+  DATE_OF_BIRTH_IS_REQUIRED: 'Date of birth is required',
+  ACCESS_TOKEN_IS_INVALID: 'Access token is invalid',
+  OLD_PASSWORD_IS_REQUIRED: 'Old password is required',
+  OLD_PASSWORD_MUST_BE_A_STRING: 'Old password must be a string',
+  OLD_PASSWORD_LENGTH_MUST_BE_FROM_6_TO_50: 'Old password length must be from 6 to 50',
+  NEW_PASSWORD_IS_REQUIRED: 'New password is required',
+  NEW_PASSWORD_MUST_BE_A_STRING: 'New password must be a string',
+  NEW_PASSWORD_LENGTH_MUST_BE_FROM_6_TO_50: 'New password length must be from 6 to 50'
+} as const
+
+export const PERFUMES_MESSAGE = {
+  GET_ALL_PERFUMES_SUCCESS: 'Get all perfumes successfully',
+  GET_PERFUME_BY_ID_SUCCESS: 'Get perfume by id successfully'
 } as const

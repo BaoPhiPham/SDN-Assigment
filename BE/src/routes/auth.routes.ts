@@ -5,7 +5,7 @@ import {
   refreshTokenController,
   registerController
 } from '~/controllers/auth.controllers.js'
-import { loginValidation, registerValidation } from '~/middlewares/auth.middlewares.js'
+import { loginValidation, registerValidation } from '~/validators/auth.validators.js'
 import { wrapRequestHandler } from '~/utils/handleFunction.js'
 
 const authRouter = Router()

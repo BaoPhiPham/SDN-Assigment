@@ -3,7 +3,7 @@ import { USERS_MESSAGE } from '~/constants/messages.js'
 import authService from '~/services/auth.services.js'
 import { clearRefreshCookie, setRefreshCookie } from './cookie.controller.js'
 import { matchedData } from 'express-validator'
-import { LoginPayload, RegisterPayload } from '~/types/requestPayload.js'
+import { LoginPayload, RegisterPayload } from '~/types/requests/requestPayload.js'
 
 export const loginController = async (req: Request, res: Response) => {
   const { email, password } = req.body as LoginPayload
@@ -20,10 +20,10 @@ export const refreshTokenController = async (req: Request, res: Response) => {
     return res.status(401).json({
       message: USERS_MESSAGE.REFRESH_TOKEN_IS_INVALID
     })
-  const { newAccesToken, newRefreshToken } = await authService.refreshTokenService(token)
+  const { newAccessToken, newRefreshToken } = await authService.refreshTokenService(token)
   setRefreshCookie(res, newRefreshToken)
 
-  res.status(200).json({ message: 'Signed new token is succesfully!!!', newAccesToken })
+  res.status(200).json({ message: 'Signed new token is succesfully!!!', newAccessToken })
 }
 
 export const logoutController = async (req: Request, res: Response) => {

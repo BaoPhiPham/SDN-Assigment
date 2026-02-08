@@ -1,5 +1,5 @@
 import { Brand, Perfume } from '~/models/index.js'
-import { PerfumeSearchFilter } from '~/types/requests/requestPayload.js'
+import { CreatePerfumePayload, PerfumeSearchFilter, UpdatePerfumePayload } from '~/types/requests/requestPayload.js'
 
 class PerfumeService {
   async getAllPerfumesService() {
@@ -46,6 +46,29 @@ class PerfumeService {
         select: 'brandName'
       })
     return result
+  }
+  async createPerfume(payload: CreatePerfumePayload) {
+    const brand = await Brand.findOne({ brandName: payload.brand as string })
+    if (!brand) return null
+    payload.brand = brand._id
+    const newPerfume = await Perfume.create(payload)
+    return newPerfume
+  }
+  async updatePerfume(id: string, payload: UpdatePerfumePayload) {
+    if (payload.brand) {
+      const brand = await Brand.findOne({ brandName: payload.brand as string })
+      if (!brand) return false
+      payload.brand = brand._id
+    }
+    const updatedPerfume = await Perfume.findByIdAndUpdate(id, payload, {
+      new: true
+    })
+    return updatedPerfume
+  }
+  async deletePerfume(id: string) {
+    const perfume = await Perfume.findByIdAndDelete(id)
+    if (!perfume) return false
+    return true
   }
 }
 

@@ -13,16 +13,16 @@ class BrandService {
   }
   async createBrand(brandName: string) {
     const brand = await Brand.create({ brandName })
-    return brand
+    return brand ? brand : null
   }
   async updateBrand(brandId: string, brandName: string) {
     const brand = await Brand.findByIdAndUpdate(brandId, { brandName }, { new: true })
-    if (!brand) throw new Error(BRANDS_MESSAGE.BRAND_NOT_FOUND)
+    if (!brand) return false
     return true
   }
   async deleteBrand(brandId: string) {
     const brand = await Brand.findByIdAndDelete(brandId)
-    if (!brand) throw new Error(BRANDS_MESSAGE.BRAND_NOT_FOUND)
+    if (!brand) return false
     return true
   }
 }

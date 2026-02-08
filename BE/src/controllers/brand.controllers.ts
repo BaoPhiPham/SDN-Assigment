@@ -23,6 +23,11 @@ export const getBrandByIdController = async (req: Request, res: Response) => {
 export const createBrandController = async (req: Request, res: Response) => {
   const { brandName } = req.body as CreateBrandPayload
   const result = await brandService.createBrand(brandName)
+  if (!result) {
+    return res.status(HTTP_STATUS.BAD_REQUEST).json({
+      message: BRANDS_MESSAGE.CREATE_BRAND_FAILED
+    })
+  }
   res.status(HTTP_STATUS.OK).json({
     message: BRANDS_MESSAGE.CREATE_BRAND_SUCCESS,
     result
@@ -32,6 +37,11 @@ export const createBrandController = async (req: Request, res: Response) => {
 export const updateBrandController = async (req: Request, res: Response) => {
   const { brandName } = req.body as CreateBrandPayload
   const result = await brandService.updateBrand(req.params.brandId as string, brandName)
+  if (!result) {
+    return res.status(HTTP_STATUS.BAD_REQUEST).json({
+      message: BRANDS_MESSAGE.UPDATE_BRAND_FAILED
+    })
+  }
   res.status(HTTP_STATUS.OK).json({
     message: BRANDS_MESSAGE.UPDATE_BRAND_SUCCESS,
     result
@@ -40,6 +50,11 @@ export const updateBrandController = async (req: Request, res: Response) => {
 
 export const deleteBrandController = async (req: Request, res: Response) => {
   const result = await brandService.deleteBrand(req.params.brandId as string)
+  if (!result) {
+    return res.status(HTTP_STATUS.BAD_REQUEST).json({
+      message: BRANDS_MESSAGE.DELETE_BRAND_FAILED
+    })
+  }
   res.status(HTTP_STATUS.OK).json({
     message: BRANDS_MESSAGE.DELETE_BRAND_SUCCESS,
     result

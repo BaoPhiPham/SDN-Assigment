@@ -10,12 +10,13 @@ import { hashFunction } from '~/utils/hash.js'
 import { RegisterPayload } from '~/types/requests/requestPayload.js'
 
 class AuthService {
-  signAccessToken(userId: string) {
+  signAccessToken(userId: string, isAdmin: boolean) {
     return signToken({
       //payload phải gồm những tk ở dưới và có thể thêm nửa
       payload: {
         userId,
-        tokenType: TokenType.AccessToken
+        tokenType: TokenType.AccessToken,
+        isAdmin
       },
       privateKey: process.env.JWT_SECRET as string,
       options: {
@@ -43,7 +44,7 @@ class AuthService {
     if (!member || passwordhash !== member.password) {
       throw new Error(USERS_MESSAGE.EMAIL_OR_PASSWORD_IS_INCORRECT)
     }
-    const accessToken = await this.signAccessToken(member._id.toString())
+    const accessToken = await this.signAccessToken(member._id.toString(), member.isAdmin)
     const jti = randomUUID()
     const refreshToken = await this.signRefreshToken(member._id.toString(), jti)
     //redis
@@ -80,7 +81,7 @@ class AuthService {
     //xóa token cũ trong redis
     await deleteRefreshToken(payload.jti as string)
     //tạo token mới
-    const newAccessToken = await this.signAccessToken(userId)
+    const newAccessToken = await this.signAccessToken(userId, payload.isAdmin as boolean)
     const jti = randomUUID()
     const newRefreshToken = await this.signRefreshToken(userId, jti)
     //lưu token mới vào redis
@@ -99,7 +100,7 @@ class AuthService {
     if (isEmailExists) throw new Error(USERS_MESSAGE.EMAIL_ALREADY_EXISTS)
     const newMember = await Member.create({ ...payload, password: hashFunction(payload.password) })
     // console.log(newMember._id) // đã có
-    const accessToken = await this.signAccessToken(newMember._id.toString())
+    const accessToken = await this.signAccessToken(newMember._id.toString(), newMember.isAdmin)
     const jti = randomUUID()
     const refreshToken = await this.signRefreshToken(newMember._id.toString(), jti)
     //redis

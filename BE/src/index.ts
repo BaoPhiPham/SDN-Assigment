@@ -7,6 +7,7 @@ import { redisClient } from './config/redis.js'
 import { errorHandler } from './middlewares/error.middleware.js'
 import perfumeRouter from './routes/perfume.routes.js'
 import memberRouter from './routes/member.routes.js'
+import brandRouter from './routes/brand.routes.js'
 
 config()
 const PORT = process.env.PORT || 5000
@@ -25,6 +26,7 @@ await redisClient.connect()
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/perfumes', perfumeRouter)
 app.use('/api/v1/members', memberRouter)
+app.use('/api/v1/brands', brandRouter)
 app.use('/', () => {
   console.log('Hello World')
 })

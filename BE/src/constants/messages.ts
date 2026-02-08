@@ -76,6 +76,18 @@ export const USERS_MESSAGE = {
   NEW_PASSWORD_LENGTH_MUST_BE_FROM_6_TO_50: 'New password length must be from 6 to 50'
 } as const
 
+export const BRANDS_MESSAGE = {
+  GET_ALL_BRANDS_SUCCESS: 'Get all brands successfully',
+  GET_BRAND_BY_ID_SUCCESS: 'Get brand by id successfully',
+  BRAND_NOT_FOUND: 'Brand not found',
+  CREATE_BRAND_SUCCESS: 'Create brand successfully',
+  BRAND_NAME_IS_REQUIRED: 'Brand name is required',
+  BRAND_NAME_MUST_BE_A_STRING: 'Brand name must be a string',
+  BRAND_NAME_LENGTH_MUST_BE_FROM_1_TO_100: 'Brand name length must be from 1 to 100',
+  UPDATE_BRAND_SUCCESS: 'Update brand successfully',
+  DELETE_BRAND_SUCCESS: 'Delete brand successfully'
+} as const
+
 export const PERFUMES_MESSAGE = {
   GET_ALL_PERFUMES_SUCCESS: 'Get all perfumes successfully',
   GET_PERFUME_BY_ID_SUCCESS: 'Get perfume by id successfully'

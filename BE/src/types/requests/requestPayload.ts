@@ -31,3 +31,7 @@ export interface ChangePasswordPayload {
   password: string
   confirm_password: string
 }
+
+export interface CreateBrandPayload {
+  brandName: string
+}

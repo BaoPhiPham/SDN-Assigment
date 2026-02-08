@@ -5,4 +5,5 @@ export interface TokenPayload extends JwtPayload {
   userId: string
   tokenType: TokenType
   jti?: string
+  isAdmin?: boolean
 }

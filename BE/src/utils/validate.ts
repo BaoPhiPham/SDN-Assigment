@@ -10,6 +10,7 @@ export const validate = (validations: RunnableValidationChains<ValidationChain>)
     }
     //ko lỗi thì next, tiếp tục request:
     const errors = validationResult(req)
+
     if (errors.isEmpty()) {
       return next()
     }

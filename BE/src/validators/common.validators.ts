@@ -43,7 +43,12 @@ export const confirmPasswordSchema: ParamSchema = {
     }
   },
   custom: {
-    options: (value, { req }) => value === req.body.password,
+    options: (value, { req }) => {
+      if (!req.body?.password) {
+        throw new Error(USERS_MESSAGE.PASSWORD_IS_REQUIRED)
+      }
+      return value === req.body.password
+    },
     errorMessage: USERS_MESSAGE.CONFIRM_PASSWORD_MUST_BE_THE_SAME_AS_PASSWORD
   }
 }

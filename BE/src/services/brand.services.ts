@@ -8,6 +8,7 @@ class BrandService {
   }
   async getBrandById(brandId: string) {
     const brand = await Brand.findById(brandId)
+
     if (!brand) throw new Error(BRANDS_MESSAGE.BRAND_NOT_FOUND)
     return brand
   }

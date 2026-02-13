@@ -14,13 +14,9 @@ import { createBrandValidation, updateBrandValidation } from '~/validators/brand
 
 const brandRouter = Router()
 
-brandRouter.get(
-  '/',
-  accessTokenValidation,
-  wrapRequestHandler(verifyAccessToken),
-  wrapRequestHandler(isAdminMiddleware),
-  wrapRequestHandler(getAllBrandsController)
-)
+//public
+brandRouter.get('/', wrapRequestHandler(getAllBrandsController))
+//private route
 brandRouter.get(
   '/:brandId',
   accessTokenValidation,

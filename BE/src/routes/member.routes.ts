@@ -8,7 +8,7 @@ import { verifyAccessToken } from '~/middlewares/auth.middlewares.js'
 const memberRouter = Router()
 
 memberRouter.put(
-  '/update-profile',
+  '/me',
   accessTokenValidation,
   wrapRequestHandler(verifyAccessToken),
   updateProfileValidation,

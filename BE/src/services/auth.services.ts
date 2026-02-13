@@ -8,6 +8,7 @@ import { TokenPayload } from '~/types/jwt/jwt.js'
 import { randomUUID } from 'node:crypto'
 import { hashFunction } from '~/utils/hash.js'
 import { RegisterPayload } from '~/types/requests/requestPayload.js'
+import memberService from './member.services.js'
 
 class AuthService {
   signAccessToken(userId: string, isAdmin: boolean) {
@@ -63,6 +64,7 @@ class AuthService {
       secretKey: process.env.JWT_SECRET as string
     })
     const userId = (payload as TokenPayload).userId
+    const user = await memberService.getMemberById(userId)
 
     if (payload.tokenType !== TokenType.RefreshToken) {
       throw new Error(USERS_MESSAGE.REFRESH_TOKEN_IS_INVALID)
@@ -81,9 +83,9 @@ class AuthService {
     //xóa token cũ trong redis
     await deleteRefreshToken(payload.jti as string)
     //tạo token mới
-    const newAccessToken = await this.signAccessToken(userId, payload.isAdmin as boolean)
+    const newAccessToken = await this.signAccessToken(user._id.toString(), user.isAdmin as boolean)
     const jti = randomUUID()
-    const newRefreshToken = await this.signRefreshToken(userId, jti)
+    const newRefreshToken = await this.signRefreshToken(user._id.toString(), jti)
     //lưu token mới vào redis
     await saveRefreshToken({
       jti: jti,
@@ -115,7 +117,7 @@ class AuthService {
   }
 
   async checkEmailService(email: string) {
-    const member = await Member.findOne({ email })
+    const member = await Member.findOne({ email }).select('-password')
     if (member) return true
     return false
   }

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { TokenType } from '~/constants/enums.js'
 import { USERS_MESSAGE } from '~/constants/messages.js'
+import memberServices from '~/services/member.services.js'
 import { verifyToken } from '~/utils/jwt.js'
 
 export const verifyAccessToken = async (
@@ -15,5 +16,22 @@ export const verifyAccessToken = async (
     throw new Error(USERS_MESSAGE.ACCESS_TOKEN_IS_INVALID)
   }
   req.userDecoded = decoded
+  next()
+}
+
+export const checkUserExists = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.userDecoded.userId
+  const user = await memberServices.getMemberById(userId)
+  req.user = user
+  next()
+}
+export const refreshTokenValidation = (req: Request, res: Response, next: NextFunction) => {
+  const token = req.cookies.refreshToken
+
+  if (!token) {
+    throw new Error(USERS_MESSAGE.REFRESH_TOKEN_IS_INVALID)
+  }
+
+  req.refreshToken = token
   next()
 }

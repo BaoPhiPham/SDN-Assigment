@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Types } from 'mongoose'
 
 export interface RegisterPayload {
   email: string
@@ -58,4 +58,16 @@ export interface UpdatePerfumePayload {
   ingredients?: string
   volume?: number
   targetAudience?: string
+}
+
+export interface CreateCommentPayload {
+  perfumeId: string | Types.ObjectId
+  author: string | Types.ObjectId
+  content: string
+  rating: number
+}
+
+export interface UpdateCommentPayload {
+  content?: string
+  rating?: number
 }

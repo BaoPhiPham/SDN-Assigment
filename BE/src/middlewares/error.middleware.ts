@@ -18,5 +18,7 @@ export const errorHandler = async (
   }
 
   // Error thông thường
-  res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: err })
+  res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+    message: err instanceof Error ? err.message : 'Internal server error'
+  })
 }

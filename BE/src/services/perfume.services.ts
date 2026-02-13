@@ -71,5 +71,5 @@ class PerfumeService {
     return true
   }
 }
-
-export default new PerfumeService()
+const perfumeService = new PerfumeService()
+export default perfumeService

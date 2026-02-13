@@ -61,7 +61,11 @@ export const USERS_MESSAGE = {
   OLD_PASSWORD_LENGTH_MUST_BE_FROM_6_TO_50: 'Old password length must be from 6 to 50',
   NEW_PASSWORD_IS_REQUIRED: 'New password is required',
   NEW_PASSWORD_MUST_BE_A_STRING: 'New password must be a string',
-  NEW_PASSWORD_LENGTH_MUST_BE_FROM_6_TO_50: 'New password length must be from 6 to 50'
+  NEW_PASSWORD_LENGTH_MUST_BE_FROM_6_TO_50: 'New password length must be from 6 to 50',
+  ONLY_MEMBER_CAN_COMMENT: 'Only member can comment',
+  YOU_ARE_NOT_ADMIN: 'You are not admin',
+  SIGNED_NEW_TOKEN_SUCCESS: 'Signed new token is successfully!!!',
+  YOU_ARE_NOT_MEMBER: 'You are not member'
 } as const
 
 export const BRANDS_MESSAGE = {
@@ -111,4 +115,23 @@ export const PERFUMES_MESSAGE = {
   CREATE_PERFUME_FAIL: 'Create perfume fail',
   UPDATE_PERFUME_FAIL: 'Update perfume fail',
   DELETE_PERFUME_FAIL: 'Delete perfume fail'
+} as const
+
+export const COMMENTS_MESSAGE = {
+  CREATE_COMMENT_SUCCESS: 'Create comment successfully',
+  COMMENT_NOT_FOUND: 'Comment not found',
+  COMMENT_CONTENT_IS_REQUIRED: 'Comment content is required',
+  COMMENT_CONTENT_MUST_BE_A_STRING: 'Comment content must be a string',
+  COMMENT_CONTENT_LENGTH_MUST_BE_FROM_1_TO_500: 'Comment content length must be from 1 to 500',
+  CREATE_COMMENT_FAIL: 'Create comment fail',
+  COMMENT_ALREADY_EXISTS: 'Comment already exists',
+  GET_ALL_COMMENT_SUCCESS: 'Get all comments successfully',
+  UPDATE_COMMENT_SUCCESS: 'Updated comment successfully',
+  UPDATE_COMMENT_FAIL: 'Updated comment fail',
+  DELETE_COMMENT_SUCCESS: 'Deleted comment successfully',
+  DELETE_COMMENT_FAIL: 'Deleted comment fail  '
+} as const
+
+export const COLLECTORS_MESSAGE = {
+  GET_ALL_COLLECTORS_SUCCESS: 'Get all collectors successfully'
 } as const

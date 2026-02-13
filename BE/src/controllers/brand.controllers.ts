@@ -8,7 +8,7 @@ export const getAllBrandsController = async (req: Request, res: Response) => {
   const result = await brandService.getAllBrands()
   res.status(HTTP_STATUS.OK).json({
     message: BRANDS_MESSAGE.GET_ALL_BRANDS_SUCCESS,
-    result
+    data: result
   })
 }
 
@@ -16,7 +16,7 @@ export const getBrandByIdController = async (req: Request, res: Response) => {
   const result = await brandService.getBrandById(req.params.brandId as string)
   res.status(HTTP_STATUS.OK).json({
     message: BRANDS_MESSAGE.GET_BRAND_BY_ID_SUCCESS,
-    result
+    data: result
   })
 }
 
@@ -28,9 +28,9 @@ export const createBrandController = async (req: Request, res: Response) => {
       message: BRANDS_MESSAGE.CREATE_BRAND_FAILED
     })
   }
-  res.status(HTTP_STATUS.OK).json({
+  res.status(HTTP_STATUS.CREATED).json({
     message: BRANDS_MESSAGE.CREATE_BRAND_SUCCESS,
-    result
+    data: result
   })
 }
 
@@ -44,7 +44,7 @@ export const updateBrandController = async (req: Request, res: Response) => {
   }
   res.status(HTTP_STATUS.OK).json({
     message: BRANDS_MESSAGE.UPDATE_BRAND_SUCCESS,
-    result
+    data: result
   })
 }
 
@@ -57,6 +57,6 @@ export const deleteBrandController = async (req: Request, res: Response) => {
   }
   res.status(HTTP_STATUS.OK).json({
     message: BRANDS_MESSAGE.DELETE_BRAND_SUCCESS,
-    result
+    data: result
   })
 }

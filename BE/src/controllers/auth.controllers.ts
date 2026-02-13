@@ -15,15 +15,10 @@ export const loginController = async (req: Request, res: Response) => {
 }
 
 export const refreshTokenController = async (req: Request, res: Response) => {
-  const token = req.cookies.refreshToken
-  if (!token)
-    return res.status(401).json({
-      message: USERS_MESSAGE.REFRESH_TOKEN_IS_INVALID
-    })
-  const { newAccessToken, newRefreshToken } = await authService.refreshTokenService(token)
+  const { newAccessToken, newRefreshToken } = await authService.refreshTokenService(req.refreshToken as string)
   setRefreshCookie(res, newRefreshToken)
 
-  res.status(200).json({ message: 'Signed new token is succesfully!!!', newAccessToken })
+  res.status(200).json({ message: USERS_MESSAGE.SIGNED_NEW_TOKEN_SUCCESS, newAccessToken })
 }
 
 export const logoutController = async (req: Request, res: Response) => {
@@ -35,7 +30,16 @@ export const logoutController = async (req: Request, res: Response) => {
 }
 
 export const registerController = async (req: Request, res: Response) => {
-  const payload = matchedData(req) as RegisterPayload
+  // matchedData chỉ lấy những field đã được validate.
+  // Nó lấy tất cả các nơi mà express-validator validate, gồm:
+  // req.body
+  // req.query
+  // req.params
+  // req.headers
+  // req.cookies
+  // Nếu chỉ muốn lấy body?
+  // const payload = matchedData(req, { locations: ['body'] })
+  const payload = matchedData<RegisterPayload>(req)
   const { accessToken, refreshToken } = await authService.registerService(payload)
   //lưu cookie
   setRefreshCookie(res, refreshToken)

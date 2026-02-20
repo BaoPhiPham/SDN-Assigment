@@ -1,73 +1,118 @@
-# React + TypeScript + Vite
+# PerfumeHub Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Modern React + TypeScript frontend application for PerfumeHub e-commerce platform.
 
-Currently, two official plugins are available:
+## Project Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── components/       # Reusable UI components
+│   ├── Navbar.tsx
+│   └── ProductCard.tsx
+├── views/           # Page-level components
+│   ├── Auth.tsx
+│   ├── Storefront.tsx
+│   ├── ProductDetail.tsx
+│   ├── UserProfile.tsx
+│   └── AdminDashboard.tsx
+├── services/        # API service layer
+│   ├── api.ts           # Base API service
+│   ├── authService.ts   # Authentication APIs
+│   ├── brandService.ts  # Brand management APIs
+│   └── productService.ts # Product APIs
+├── hooks/           # Custom React hooks
+│   ├── useAuth.ts
+│   └── useProducts.ts
+├── utils/           # Utility functions
+│   ├── validators.ts    # Form validation
+│   ├── formatters.ts    # Data formatting
+│   └── storage.ts       # LocalStorage wrapper
+├── types.ts         # TypeScript type definitions
+├── constants.ts     # Mock data and constants
+├── App.tsx          # Main app component
+└── main.tsx         # App entry point
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Tech Stack
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **React 19** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool
+- **Tailwind CSS** - Styling
+- **Lucide React** - Icons
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
+
+## Code Quality
+
+```bash
+# Run linter
+npm run lint
+
+# Fix linting issues
+npm run lint:fix
+
+# Check formatting
+npm run prettier
+
+# Fix formatting
+npm run prettier:fix
+```
+
+## Architecture
+
+### Component Layer
+- Reusable UI components with props interface
+- Presentational components focused on UI
+
+### View Layer
+- Page-level components
+- Handle user interactions and state management
+- Compose multiple components
+
+### Service Layer
+- API communication
+- Data fetching and mutations
+- Centralized error handling
+
+### Hooks Layer
+- Custom React hooks for shared logic
+- State management
+- Side effects handling
+
+### Utils Layer
+- Pure utility functions
+- Validators, formatters, helpers
+- No side effects
+
+## Environment Variables
+
+Create a `.env` file:
+
+```env
+VITE_API_URL=http://localhost:3000/api
+```
+
+## Features
+
+- User authentication (login/register)
+- Product browsing and filtering
+- Product detail view
+- User profile management
+- Admin dashboard for brand management
+- Responsive design
+- Type-safe development

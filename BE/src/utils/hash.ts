@@ -1,12 +1,14 @@
-//Này là nơi chưa hàm hashpassword
-import { createHash } from 'node:crypto'
-import { config } from 'dotenv'
+// hash.ts
+import bcrypt from 'bcrypt'
 
-config()
-export function sha256(content: string) {
-  return createHash('sha256').update(content).digest('hex')
+const SALT_ROUNDS = Number(process.env.BCRYPT_ROUNDS) || 10 // có thể tăng lên 12 nếu muốn bảo mật cao hơn
+
+// Hash password
+export const hashPassword = async (password: string): Promise<string> => {
+  return await bcrypt.hash(password, SALT_ROUNDS)
 }
 
-export const hashFunction = (password: string) => {
-  return sha256(password + process.env.PASSWORD_SECRET)
+// So sánh password khi login
+export const comparePassword = async (password: string, hashedPassword: string): Promise<boolean> => {
+  return await bcrypt.compare(password, hashedPassword)
 }

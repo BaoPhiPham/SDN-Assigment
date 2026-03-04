@@ -10,19 +10,32 @@ import memberRouter from './routes/member.routes.js'
 import brandRouter from './routes/brand.routes.js'
 import collectorRouter from './routes/collector.routes.js'
 import commentRouter from './routes/comment.routes.js'
+import cors from 'cors'
+import mongoose from 'mongoose'
+import { apiLimiter } from './middlewares/rateLimiter.js'
 
 config()
 const PORT = process.env.PORT || 5000
 const app = express()
-
 // middleware
 app.use(express.json())
+app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }))
 app.use(cookieParser())
 
 //connectDB
 await connectDB()
 //redis:
 await redisClient.connect()
+process.on('SIGTERM', async () => {
+  await redisClient.quit()
+  await mongoose.disconnect()
+  process.exit(0)
+})
+process.on('SIGINT', async () => {
+  await redisClient.quit()
+  await mongoose.disconnect()
+  process.exit(0)
+})
 
 //routes:
 app.use('/api/v1/auth', authRouter)

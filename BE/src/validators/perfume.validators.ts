@@ -14,7 +14,7 @@ const perfumeNameSchema: ParamSchema = {
     errorMessage: PERFUMES_MESSAGE.PERFUME_NAME_LENGTH_MUST_BE_FROM_1_TO_100,
     options: {
       min: 3,
-      max: 50
+      max: 100
     }
   }
 }

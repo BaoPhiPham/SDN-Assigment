@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose'
 
 const commentSchema = new Schema(
   {
-    rating: { type: Number, min: 1, max: 3, required: true },
+    rating: { type: Number, min: 1, max: 5, required: true },
     content: { type: String, required: true },
     author: {
       type: mongoose.Schema.Types.ObjectId,
@@ -12,8 +12,7 @@ const commentSchema = new Schema(
     perfume: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Perfume',
-      required: true,
-      index: true
+      required: true
     }
   },
   { timestamps: true }

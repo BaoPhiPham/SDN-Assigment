@@ -2,14 +2,17 @@ import { Schema } from 'mongoose'
 
 const memberSchema = new Schema(
   {
+    googleId: {
+      type: String,
+      unique: true
+    },
     email: {
       type: String,
       required: true,
       unique: true
     },
     password: {
-      type: String,
-      required: true
+      type: String
     },
     name: {
       type: String,
@@ -24,6 +27,10 @@ const memberSchema = new Schema(
       required: true
     },
     isAdmin: {
+      type: Boolean,
+      default: false
+    },
+    is_deleted: {
       type: Boolean,
       default: false
     }

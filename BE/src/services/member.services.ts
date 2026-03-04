@@ -1,14 +1,19 @@
 import { USERS_MESSAGE } from '~/constants/messages.js'
 import { Member } from '~/models/index.js'
 import { ChangePasswordPayload, UpdateProfilePayload } from '~/types/requests/requestPayload.js'
-import { hashFunction } from '~/utils/hash.js'
+import { comparePassword, hashPassword } from '~/utils/hash.js'
 import authService from './auth.services.js'
+import { ErrorWithStatus } from '~/models/error.model.js'
+import HTTP_STATUS from '~/constants/httpStatus.js'
 
 class MemberService {
   async getMemberById(userId: string) {
     const user = await Member.findById(userId).select('-password')
     if (!user) {
-      throw new Error(USERS_MESSAGE.USER_NOT_FOUND)
+      throw new ErrorWithStatus({
+        message: USERS_MESSAGE.USER_NOT_FOUND, //
+        status: HTTP_STATUS.UNAUTHORIZED
+      })
     }
     return user
   }
@@ -16,23 +21,38 @@ class MemberService {
     const updated = await Member.findByIdAndUpdate(userId, payload, { new: true }).select('-password')
 
     if (!updated) {
-      throw new Error(USERS_MESSAGE.USER_NOT_FOUND)
+      throw new ErrorWithStatus({
+        message: USERS_MESSAGE.USER_NOT_FOUND, //
+        status: HTTP_STATUS.UNAUTHORIZED
+      })
     }
 
     return updated
   }
 
   async changePasswordService(userId: string, payload: ChangePasswordPayload, token: string) {
-    const member = await Member.findById(userId).select('-password')
+    const member = await Member.findById(userId)
     if (!member) {
-      throw new Error(USERS_MESSAGE.USER_NOT_FOUND)
+      throw new ErrorWithStatus({
+        message: USERS_MESSAGE.USER_NOT_FOUND, //
+        status: HTTP_STATUS.UNAUTHORIZED
+      })
     }
-    const hashOldPassword = hashFunction(payload.old_password)
-    const hashNewPassword = hashFunction(payload.password)
-    if (hashOldPassword !== member.password) {
-      throw new Error(USERS_MESSAGE.OLD_PASSWORD_NOT_MATCH)
+    //nếu oauth2 thì ko change pass đc
+    if (!member.password) {
+      throw new ErrorWithStatus({
+        message: USERS_MESSAGE.ACCOUNT_USES_GOOGLE_LOGIN_CANNOT_CHANGE_PASSWORD, //
+        status: HTTP_STATUS.BAD_REQUEST
+      })
     }
-    member.password = hashNewPassword
+    //
+    if (!(await comparePassword(payload.old_password, member.password as string))) {
+      throw new ErrorWithStatus({
+        message: USERS_MESSAGE.OLD_PASSWORD_NOT_MATCH, //
+        status: HTTP_STATUS.BAD_REQUEST
+      })
+    }
+    member.password = await hashPassword(payload.password)
     await member.save()
     await authService.logoutService(token)
     return true

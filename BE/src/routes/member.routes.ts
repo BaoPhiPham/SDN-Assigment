@@ -3,7 +3,7 @@ import { changePasswordController, updateProfileController } from '../controller
 import { changePasswordValidation, updateProfileValidation } from '~/validators/member.validators.js'
 import { wrapRequestHandler } from '~/utils/handleFunction.js'
 import { accessTokenValidation } from '~/validators/auth.validators.js'
-import { verifyAccessToken } from '~/middlewares/auth.middlewares.js'
+import { refreshTokenValidation, verifyAccessToken } from '~/middlewares/auth.middlewares.js'
 
 const memberRouter = Router()
 
@@ -17,6 +17,7 @@ memberRouter.put(
 memberRouter.put(
   '/change-password',
   accessTokenValidation,
+  refreshTokenValidation,
   wrapRequestHandler(verifyAccessToken),
   changePasswordValidation,
   wrapRequestHandler(changePasswordController)

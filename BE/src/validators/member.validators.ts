@@ -1,5 +1,7 @@
 import { checkSchema, ParamSchema } from 'express-validator'
+import HTTP_STATUS from '~/constants/httpStatus.js'
 import { USERS_MESSAGE } from '~/constants/messages.js'
+import { ErrorWithStatus } from '~/models/error.model.js'
 import { validate } from '~/utils/validate.js'
 
 const nameSchema: ParamSchema = {
@@ -69,7 +71,10 @@ const confirmPasswordSchema: ParamSchema = {
   custom: {
     options: (value, { req }) => {
       if (!req.body?.password) {
-        throw new Error(USERS_MESSAGE.PASSWORD_IS_REQUIRED)
+        throw new ErrorWithStatus({
+          message: USERS_MESSAGE.PASSWORD_IS_REQUIRED, //
+          status: HTTP_STATUS.BAD_REQUEST
+        })
       }
       return value === req.body.password
     },

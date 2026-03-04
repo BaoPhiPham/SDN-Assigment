@@ -12,4 +12,5 @@ export interface IPerfume {
   volume: number
   targetAudience: string
   brand: Types.ObjectId
+  is_deleted?: boolean
 }

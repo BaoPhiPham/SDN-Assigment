@@ -9,7 +9,8 @@ const HTTP_STATUS = {
   FORBIDDEN: 403,
   BAD_REQUEST: 400,
   INTERNAL_SERVER_ERROR: 500,
-  PARTIAL_CONTENT: 206
+  PARTIAL_CONTENT: 206,
+  FAIL: 503
 } as const // thì ko thể sửa các filed cx như value của filed trong class
 
 export default HTTP_STATUS

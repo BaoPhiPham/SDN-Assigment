@@ -15,6 +15,11 @@ export const getAllPerfumesController = async (req: Request, res: Response) => {
 
 export const getPerfumeByIdController = async (req: Request, res: Response) => {
   const perfume = await perfumeServices.getPerfumeByIdService(req.params.id as string)
+  if (!perfume) {
+    return res.status(HTTP_STATUS.BAD_REQUEST).json({
+      message: PERFUMES_MESSAGE.PERFUME_NOT_FOUND
+    })
+  }
   res.status(HTTP_STATUS.OK).json({
     message: PERFUMES_MESSAGE.GET_PERFUME_BY_ID_SUCCESS,
     data: perfume

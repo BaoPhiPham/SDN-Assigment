@@ -2,6 +2,8 @@ import { checkSchema, ParamSchema } from 'express-validator'
 import { USERS_MESSAGE } from '~/constants/messages.js'
 import { validate } from '~/utils/validate.js'
 import { confirmPasswordSchema, emailSchema, nameSchema } from './common.validators.js'
+import { ErrorWithStatus } from '~/models/error.model.js'
+import HTTP_STATUS from '~/constants/httpStatus.js'
 
 const passwordSchema: ParamSchema = {
   notEmpty: {
@@ -71,7 +73,10 @@ export const accessTokenValidation = validate(
         custom: {
           options: (value) => {
             if (!value.startsWith('Bearer ')) {
-              throw new Error(USERS_MESSAGE.ACCESS_TOKEN_IS_REQUIRED)
+              throw new ErrorWithStatus({
+                message: USERS_MESSAGE.ACCESS_TOKEN_IS_REQUIRED, //
+                status: HTTP_STATUS.UNAUTHORIZED
+              })
             }
             return true
           }
@@ -79,5 +84,18 @@ export const accessTokenValidation = validate(
       }
     },
     ['headers']
+  )
+)
+
+export const googleLoginValidation = validate(
+  checkSchema(
+    {
+      id_token: {
+        notEmpty: {
+          errorMessage: USERS_MESSAGE.GOOGLE_ID_TOKEN_IS_REQUIRED
+        }
+      }
+    },
+    ['body']
   )
 )

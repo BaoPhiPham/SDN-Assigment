@@ -11,6 +11,10 @@ const perfumeSchema = new Schema(
     ingredients: { type: String, required: true },
     volume: { type: Number, required: true },
     targetAudience: { type: String, required: true }, // male, femail, unisex
+    is_deleted: {
+      type: Boolean,
+      default: false
+    },
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,

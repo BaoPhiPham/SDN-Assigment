@@ -1,8 +1,9 @@
 import mongoose, { Types } from 'mongoose'
 
 export interface RegisterPayload {
+  googleId?: string
   email: string
-  password: string
+  password?: string
   name: string
   yob: number
   gender: boolean
@@ -62,7 +63,6 @@ export interface UpdatePerfumePayload {
 
 export interface CreateCommentPayload {
   perfumeId: string | Types.ObjectId
-  author: string | Types.ObjectId
   content: string
   rating: number
 }
@@ -70,4 +70,20 @@ export interface CreateCommentPayload {
 export interface UpdateCommentPayload {
   content?: string
   rating?: number
+}
+
+export interface GoogleLoginPayload {
+  sub: string
+  email: string
+  name: string
+  birthdate: string
+  gender: boolean
+}
+
+export interface GoogleRegisterPayload {
+  googleId: string
+  email: string
+  name: string
+  yob: number
+  gender: boolean
 }

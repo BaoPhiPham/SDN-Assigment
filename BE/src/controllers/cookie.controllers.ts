@@ -7,7 +7,7 @@ export const setRefreshCookie = (res: Response, token: string) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
-    maxAge: ttl
+    maxAge: ttl * 1000 // maxAge tính bằng MILLISECONDS
   })
 }
 

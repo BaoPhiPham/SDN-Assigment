@@ -9,7 +9,7 @@ import { verifyAccessToken } from '~/middlewares/auth.middlewares.js'
 import { isMemberMiddleware } from '~/middlewares/role.middlewares.js'
 import { wrapRequestHandler } from '~/utils/handleFunction.js'
 import { accessTokenValidation } from '~/validators/auth.validators.js'
-import { createCommentValidation } from '~/validators/comment.validators.js'
+import { createCommentValidation, updateCommentValidation } from '~/validators/comment.validators.js'
 
 const commentRouter = Router()
 commentRouter.post(
@@ -21,23 +21,19 @@ commentRouter.post(
   wrapRequestHandler(createCommentController)
 )
 
-commentRouter.get(
-  '/:perfumeId',
-  accessTokenValidation, //
-  wrapRequestHandler(verifyAccessToken),
-  wrapRequestHandler(getAllCommentController)
-)
+commentRouter.get('/:perfumeId', wrapRequestHandler(getAllCommentController))
 
 commentRouter.put(
-  '/:id',
+  '/:commentId',
   accessTokenValidation,
   wrapRequestHandler(verifyAccessToken),
   wrapRequestHandler(isMemberMiddleware),
+  updateCommentValidation,
   wrapRequestHandler(updateCommentController)
 )
 
 commentRouter.delete(
-  '/:id',
+  '/:commentId',
   accessTokenValidation,
   wrapRequestHandler(verifyAccessToken),
   wrapRequestHandler(isMemberMiddleware),

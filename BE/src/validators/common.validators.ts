@@ -1,5 +1,8 @@
 import { ParamSchema } from 'express-validator'
 import { USERS_MESSAGE } from '~/constants/messages.js'
+import mongoose from 'mongoose'
+import { ErrorWithStatus } from '~/models/error.model.js'
+import HTTP_STATUS from '~/constants/httpStatus.js'
 
 export const nameSchema: ParamSchema = {
   notEmpty: {
@@ -44,11 +47,22 @@ export const confirmPasswordSchema: ParamSchema = {
   },
   custom: {
     options: (value, { req }) => {
-      if (!req.body?.password) {
-        throw new Error(USERS_MESSAGE.PASSWORD_IS_REQUIRED)
+      if(!value){
+        throw new ErrorWithStatus({
+          message: USERS_MESSAGE.CONFIRM_PASSWORD_IS_REQUIRED,
+          status: HTTP_STATUS.BAD_REQUEST
+        })
       }
-      return value === req.body.password
+     return value === req.body.password
     },
     errorMessage: USERS_MESSAGE.CONFIRM_PASSWORD_MUST_BE_THE_SAME_AS_PASSWORD
+  }
+}
+
+//validate object id đc gửi lên
+export const objectIdSchema: ParamSchema = {
+  custom: {
+    options: (value) => mongoose.Types.ObjectId.isValid(value as string),
+    errorMessage: 'Invalid ID format'
   }
 }

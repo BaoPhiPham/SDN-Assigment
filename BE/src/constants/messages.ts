@@ -65,7 +65,15 @@ export const USERS_MESSAGE = {
   ONLY_MEMBER_CAN_COMMENT: 'Only member can comment',
   YOU_ARE_NOT_ADMIN: 'You are not admin',
   SIGNED_NEW_TOKEN_SUCCESS: 'Signed new token is successfully!!!',
-  YOU_ARE_NOT_MEMBER: 'You are not member'
+  YOU_ARE_NOT_MEMBER: 'You are not member',
+  GOOGLE_AUTHENTICATION_FAILED: 'Google authentication failed',
+  ONLY_MEMBERS_CAN_PERFORM_THIS_ACTION: 'Only members can perform this action',
+  ADMIN_CANNOT_PERFORM_THIS_ACTION: 'Admin cannot perform this action',
+  GOOGLE_EMAIL_NOT_VERIFIED: 'Google email is not verified',
+  INVALID_GOOGLE_TOKEN_ISSUER: 'Invalid google token issuer',
+  ACCOUNT_USES_GOOGLE_LOGIN_CANNOT_CHANGE_PASSWORD: 'Account uses Google login, cannot change password',
+  GOOGLE_ID_TOKEN_IS_REQUIRED: 'Google id token is required'
+
 } as const
 
 export const BRANDS_MESSAGE = {
@@ -129,7 +137,8 @@ export const COMMENTS_MESSAGE = {
   UPDATE_COMMENT_SUCCESS: 'Updated comment successfully',
   UPDATE_COMMENT_FAIL: 'Updated comment fail',
   DELETE_COMMENT_SUCCESS: 'Deleted comment successfully',
-  DELETE_COMMENT_FAIL: 'Deleted comment fail  '
+  DELETE_COMMENT_FAIL: 'Deleted comment fail',
+  RATING_MUST_BE_BETWEEN_1_AND_5: 'Rating must be between 1 and 5'
 } as const
 
 export const COLLECTORS_MESSAGE = {

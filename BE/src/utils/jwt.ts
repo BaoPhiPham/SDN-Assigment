@@ -34,9 +34,9 @@ export const verifyToken = ({ token, secretKey }: { token: string; secretKey: st
   return new Promise<TokenPayload>((resolve, reject) => {
     jwt.verify(token, secretKey, (error, decoded) => {
       if (error) {
-        throw reject(error)
+        return reject(error)
       }
-      resolve(decoded as TokenPayload)
+      return resolve(decoded as TokenPayload)
     })
   })
 }
